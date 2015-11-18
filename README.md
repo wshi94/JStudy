@@ -54,17 +54,17 @@ var WordList = new mongoose.Schema({
 
 ## Wireframes
 
-![homepage](img/homepage.jpg)
+![homepage](img/homepage.JPG)
 
-![search](img/search.jpg)
+![search](img/search.JPG)
 
-![search results](img/search-results.jpg)
+![search results](img/search-results.JPG)
 
-![lists](img/lists.jpg)
+![lists](img/lists.JPG)
 
-![individual list](img/individual-list.jpg)
+![individual list](img/individual-list.JPG)
 
-![test](img/test.jpg)
+![test](img/test.JPG)
 
 
 ## Sitemap
