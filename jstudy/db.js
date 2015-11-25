@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
 	URLSlugs = require('mongoose-url-slugs');
+var passportLocalMongoose = require('passport-local-mongoose');
 
 var Schema = mongoose.Schema;
 
@@ -38,6 +39,17 @@ var WordList = new mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
     listName: {type: String, required: true},
     lastTime: {type: Number},
-	lastScore: {type: Number},
-	words: [Word]
+	  lastScore: {type: Number},
+	  words: [Word]
 });
+
+User.plugin(passportLocalMongoose);
+
+//just the name should work, otherwise it gets kind of unwieldy
+WordList.plugin(URLSlugs('listName'));
+
+mongoose.model('User', User);
+mongoose.model('Word', Word);
+mongoose.model('WordList', WordList);
+
+mongoose.connect('mongodb://localhost/jstudydb');

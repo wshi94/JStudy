@@ -89,22 +89,17 @@ As a user, I want to be able to easily add a word I search for to one of my list
 
 Likely research topics include:
 <ul>
-<li>MVC</li>
-<li>Automated Functional Testing</li>
-<li>JSHint</li>
-<li>User Authentication</li>
-<li>CSS Framework Use</li>
-<li>Online Japanese-English Dictionary API</li>
+<li>MVC (1 point)</li>
+<li>JSHint (1 point)</li>
+<li>User Authentication (3 points)</li>
+<li>CSS Framework Use (1 point)</li>
+<li>Online Japanese-English Dictionary API (2 points)</li>
 </ul>
 
 
 ### MVC
 
 MVC stands for Model-View-Controller. It is a design pattern for implementing user interfaces that separates the logic (model) with the presentation (view) using a middleman (controller). It may be helpful to follow to design pattern in order to allow for greater extensibility later and to keep logic bugs from affecting the presentation and vice versa.
-
-### Automated Functional Testing
-
-Automated functional testing is a way of testing your application automatically using predefined tests that the application must pass. This automation allows the developer to always be aware of possible bugs in the code. Possible modules to use include Selenium and PhantomJS.
 
 ### User Authentication
 

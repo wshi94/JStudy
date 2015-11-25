@@ -1,0 +1,24 @@
+TODO (High Level)
+	- Finish authentication
+	- Add API support (probably Jisho since JMDict didn't work so well while testing it)
+	- Fix layout (it looks ugly right now)
+	- Make testing page
+
+
+
+TODO (Specifics)
+	- Search should be done in clientside JS (Javascript form likely)
+	- Should remove "createdBy" stuff after adding authentication
+	- "Sign Up" and "Login" should disappear once someone has logged in
+	- Should also refactor everything for sessions after adding authentication
+	- Expand home page
+	- Lists page looks horrible at the moment
+	- "Words to Add" passes in a spaced text of words, but I can't seem to split based on spaces. Figure out why
+
+
+
+NOTES
+	- Do we want to allow people to still create lists while not logged in?
+	- Bootstrap vertical forms have too long input fields, but horizontal forms look bad. Probably can change with width in vertical
+	- Do we want people to add words while making the list or just do it later in the actual list after creation?
+	- Navbar looks kind of boring, tweak it a little maybe
