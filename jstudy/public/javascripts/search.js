@@ -37,6 +37,8 @@ function evaluateSearch(){
                 searchQuery.addEventListener('click', evaluateSearch);
             Can do above to begin process of adding stuff to list
             
+            TOP 5 "is_common" words will be shown
+            
             
             Definition on the right
             

@@ -4,7 +4,6 @@ require('./auth');
 var passport = require('passport');
 var express = require('express');
 var path = require('path');
-//var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -12,17 +11,16 @@ var request = require('request');
 
 var mongoose = require('mongoose');
 
+//routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
 
-/*
-    test code for authentication
-*/
+//authentication setup
 var session = require('express-session');
 var sessionOptions = {
-	secret: 'secret cookie thang (store this elsewhere!)',
+	secret: 'abc',
 	resave: true,
 	saveUninitialized: true
 };
@@ -32,9 +30,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(function(req, res, next){
-	res.locals.user = req.user;
+	res.locals.user = req.user;    //middleware that adds req.user context to every template
 	next();
 });
+//===============================
+
 
 //proxy for site that doesn't have CORS headers
 app.use('/proxy', function(req, res) {  
@@ -43,6 +43,7 @@ app.use('/proxy', function(req, res) {
   req.pipe(request(url)).pipe(res);
 });
 //===============================
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -55,8 +56,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-//app.use(express.static('public'));
 
 
 app.use('/', routes);
