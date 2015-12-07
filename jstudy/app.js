@@ -8,6 +8,7 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var request = require('request');
 
 var mongoose = require('mongoose');
 
@@ -34,6 +35,13 @@ app.use(function(req, res, next){
 	res.locals.user = req.user;
 	next();
 });
+
+//proxy for site that doesn't have CORS headers
+app.use('/proxy', function(req, res) {  
+  var searchTerm = req.url.replace('/', '');
+  var url = 'http://jisho.org/api/v1/search/words?keyword=' + searchTerm;
+  req.pipe(request(url)).pipe(res);
+});
 //===============================
 
 // view engine setup
@@ -47,6 +55,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//app.use(express.static('public'));
+
 
 app.use('/', routes);
 app.use('/users', users);

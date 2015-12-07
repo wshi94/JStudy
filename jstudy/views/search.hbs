@@ -1,3 +1,5 @@
+<script type="text/javascript" src="javascripts/search.js"></script>
+
 <style>
 #imaginary_container{
     margin-top:20%; /* Don't copy this */
@@ -16,16 +18,20 @@
 }
 </style>
 
-<div class="container">
+<div id="1" class="container">
 	<div class="row">
         <div class="col-sm-6 col-sm-offset-3">
             <div id="imaginary_container"> 
                 <div class="input-group stylish-input-group">
-                    <input type="text" class="form-control"  placeholder="Search" >
+                    <input id="searchTerm" type="text" class="form-control"  placeholder="Search" >
                     <span class="input-group-addon">
-                        <button type="submit">
+                        <button id="search" type="submit">
 
                         </button>  
+                        <button id="button1" type="button">
+                            Submit
+                        </button>
+                            
                     </span>
                 </div>
             </div>
