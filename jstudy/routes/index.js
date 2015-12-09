@@ -30,7 +30,7 @@ router.get('/lists', function(req, res, next){
             res.redirect('/lists');
         } 
         else{
-            console.log(req.user.wordLists);
+            console.log(user.wordLists);
             res.render('lists', {'wordList': user.wordLists});    
         }
         });
@@ -64,6 +64,11 @@ router.post('/lists/create', function(req, res, next){
         listName: req.body.listName,
         user: req.user._id,
         words: []
+        /*
+            TODO
+                Add words from the form
+                Space separation doesn't seem to work?
+        */
     });
 
     //save the list
@@ -80,6 +85,7 @@ router.post('/lists/create', function(req, res, next){
 //individual lists
 router.get('/lists/:slug', function(req, res, next){
     WordList.findOne({slug: req.params.slug}, function(err, list, count){
+        console.log(list);
         res.render('makeList', {'heading': list.listName, 'list': list});
     });
 });
