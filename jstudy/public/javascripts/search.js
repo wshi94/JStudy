@@ -29,6 +29,10 @@ function evaluateSearch(){
         }
     });
     
+    /*
+        TODO:
+            Make this more user friendly
+    */
     req.addEventListener('error', function(e) {
 	   document.body.appendChild(document.createTextNode('uh-oh, something went wrong ' + e));
     });
@@ -59,15 +63,25 @@ function displaySearchResults(searchResults){
     
     console.log(topResults);
     
+    var entries = document.createElement('div');
+    entries.id = 'entries';
+    document.body.appendChild(entries);
+    
+    //there should be at most 5 entries
+    //var entryCounter = 1;
+    
     topResults.forEach(function(obj) {
         //create the row for the current word
         var row = document.createElement('div');
         row.className = 'row';
-        row.id = '';
+        //row.id = 'entry' + entryCounter;
+        //entryCounter++;
             
         //create the container that will hold the word
         var word = document.createElement('div');
         word.className = 'col-xs-2 col-md-1.5';
+        word.id = 'word';
+        
         //some words don't have kanji, so just use the readings instead
         if (obj.japanese[0].word) {
             word.textContent = obj.japanese[0].word;
@@ -84,7 +98,9 @@ function displaySearchResults(searchResults){
             
         //create the separate divs in the dictionary entry
         var partOfSpeech = document.createElement('div');
+        partOfSpeech.id = 'partOfSpeech';
         var definition = document.createElement('div');
+        definition.id = 'definition';
             
         //append these separate divs to the dictionary entry
         dictEntry.appendChild(partOfSpeech);
@@ -123,14 +139,16 @@ function displaySearchResults(searchResults){
             }
         }
             
-        //allow the word container to be clickable so that we can add it to a list
-        word.addEventListener('click', clickedWord);
+        //allow the dictionary entry container to be clickable so that we can add it to a list
+        row.addEventListener('click', clickedWord);
             
         //add the dictionary entry to the document
         row.appendChild(word);
         row.appendChild(dictEntry);
-        document.body.appendChild(row);
-        document.body.appendChild(document.createElement('br'));    //linebreak for formatting	     
+        entries.appendChild(row);
+        entries.appendChild(document.createElement('br'));
+        document.body.appendChild(entries);
+        //document.body.appendChild(document.createElement('br'));    //linebreak for formatting	     
     });
 }
 
@@ -153,5 +171,122 @@ function displaySearchResults(searchResults){
     */
 
 function clickedWord(){
-    alert("clicked");
+    //alert("clicked");
+
+    var entries = document.getElementById('entries');
+
+    //wipe the page clean
+    while (entries.firstChild){
+        entries.removeChild(entries.firstChild);
+    }
+    
+    //leave the clicked one as the only entry
+    entries.appendChild(this);
+    
+    //print the active lists you have
+    var url = 'http://localhost:3000/api/lists';
+    var req = new XMLHttpRequest();
+    req.open('GET', url, true);
+    
+    req.addEventListener('load', function() {
+        if (req.status >= 200 && req.status < 400) {
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/word/create';
+            document.body.appendChild(document.createElement('br'));
+            document.body.appendChild(form);
+            
+            var lists = JSON.parse(req.responseText);
+            
+            var helpText = document.createElement('div');
+            helpText.textContent = 'Choose the list you\'d like to add the word to:';
+            helpText.style.marginLeft = '10px';
+            form.appendChild(helpText);
+            form.appendChild(document.createElement('br'));
+            
+            lists.forEach(function(list) {
+                var radio = document.createElement('div');
+                radio.className = 'radio';
+                
+                var label = document.createElement('label');
+                radio.appendChild(label);
+                
+                var radioInput = document.createElement('input');
+                radioInput.type = 'radio';
+                radioInput.name = 'radioOption';
+                radioInput.value = list.listName;
+                radio.style.marginLeft = '10px';
+                
+                label.appendChild(radioInput);
+                var div = document.createElement('div');
+                div.textContent = list.listName;
+                label.appendChild(div);
+
+                
+			    form.appendChild(radio);
+			    //div.textContent = list.listName;
+                
+                var slug = document.createElement('input');
+                slug.type = 'hidden';
+                slug.name = 'slug';
+                slug.value = list.listName;
+                
+                form.appendChild(slug);
+                
+
+		    });
+            
+            var buttonGroup = document.createElement('div');
+            buttonGroup.className = 'form-group';
+            
+            var buttonControls = document.createElement('div');
+            buttonControls.className = 'controls';
+            
+            var button = document.createElement('button');
+            button.className = 'btn btn-default';
+            button.type = 'submit';
+            button.textContent = 'Add to List';
+            button.id = 'addToListButton';
+            button.style.marginLeft = '10px';
+            
+            buttonControls.appendChild(button);
+            buttonGroup.appendChild(buttonControls);
+            form.appendChild(document.createElement('br'));
+            form.appendChild(buttonGroup);
+            //displaySearchResults(searchResults);
+            //form.appendChild(entries);
+            
+            var word = document.createElement('input');
+            word.type = 'hidden';
+            word.name = 'word';
+            word.value = document.getElementById('word').textContent;
+           
+            var partOfSpeech = document.createElement('input');
+            partOfSpeech.type = 'hidden';
+            partOfSpeech.name = 'partOfSpeech';
+            partOfSpeech.value = document.getElementById('partOfSpeech').textContent;
+            
+            var definition = document.createElement('input');
+            definition.type = 'hidden';
+            definition.name = 'definition';
+            definition.value = document.getElementById('definition').textContent;
+            
+            
+            form.appendChild(word);
+            form.appendChild(partOfSpeech);
+            form.appendChild(definition);
+        }
+    });
+    
+    /*
+        TODO:
+            Make this more user friendly
+    */
+    req.addEventListener('error', function(e) {
+	   document.body.appendChild(document.createTextNode('uh-oh, something went wrong ' + e));
+    });
+    
+    req.send();
+    
+
 }

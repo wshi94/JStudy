@@ -16,6 +16,11 @@ TODO (Specifics)
 	- Expand home page
 	- Lists page looks horrible at the moment
 	- "Words to Add" passes in a spaced text of words, but I can't seem to split based on spaces. Figure out why
+	DONE - Finish post request for sending word from search to list
+	- Finish reworking list so that you can only add words from search
+		Creating a list only involves the name
+		Clicking a list only lets you see the words you've added, and delete words
+	- Maybe support deleting words in lists?
 
 
 

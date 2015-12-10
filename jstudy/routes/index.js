@@ -30,7 +30,7 @@ router.get('/lists', function(req, res, next){
             res.redirect('/lists');
         } 
         else{
-            console.log(user.wordLists);
+            //console.log(user.wordLists);
             res.render('lists', {'wordList': user.wordLists});    
         }
         });
@@ -50,6 +50,29 @@ router.get('/lists', function(req, res, next){
         res.render('lists', {'wordList': list});
     });
     */
+});
+
+router.get('/api/lists', function(req, res) {
+  if (!!req.user){       //if we are logged in, then show the lists
+        User.findOne({username: req.user.username}).populate('wordLists').exec(function(err, user){
+        if (err){
+            res.json({foo: 'baz'});
+            //res.redirect('/lists');
+        } 
+        else{
+            //console.log(user.wordLists);
+            //res.render('lists', {'wordList': user.wordLists});   
+            res.json(user.wordLists.map(function(ele){
+                return {
+                    'listName': ele.listName
+                };
+            }));
+        }
+        });
+    }
+    else{
+        res.json({foo: 'bar'});
+    }
 });
 
 //create a new list
@@ -73,7 +96,7 @@ router.post('/lists/create', function(req, res, next){
 
     //save the list
     wordList.save(function(err, list){
-        console.log("List saved");
+        //console.log("List saved");
         
         req.user.wordLists.push(list._id);
         req.user.save(function(err, user){
@@ -85,7 +108,7 @@ router.post('/lists/create', function(req, res, next){
 //individual lists
 router.get('/lists/:slug', function(req, res, next){
     WordList.findOne({slug: req.params.slug}, function(err, list, count){
-        console.log(list);
+        //console.log(list);
         res.render('makeList', {'heading': list.listName, 'list': list});
     });
 });
@@ -96,12 +119,15 @@ router.get('/lists/:slug/test', function(req, res, next){
 });
 
 router.post('/word/create', function(req, res, next){
+    //console.log(req.body);
+    
     //find by slug name and then update that list with a new item
-    WordList.findOneAndUpdate({slug:req.body.slug},
+    //slug name is whatever radio option was checked on the search page
+    WordList.findOneAndUpdate({slug:req.body.radioOption},
                           {$push: {words: {word: req.body.word, partOfSpeech: req.body.partOfSpeech, definition: req.body.definition}}},
                           function(err, list, count) {
 	       //console.log(err, list, count);
-           res.redirect('/lists/' + list.slug);
+           res.redirect('/lists/' + list.listName);
     }); 
 });
 
