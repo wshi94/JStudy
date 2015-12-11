@@ -64,8 +64,6 @@ var WordList = new mongoose.Schema({
 
 ![individual list](img/individual-list.JPG)
 
-![test](img/test.JPG)
-
 
 ## Sitemap
 
@@ -89,36 +87,29 @@ As a user, I want to be able to easily add a word I search for to one of my list
 
 Likely research topics include:
 <ul>
-<li>MVC (1 point)</li>
 <li>JSHint (1 point)</li>
 <li>User Authentication (3 points)</li>
 <li>CSS Framework Use (1 point)</li>
-<li>Online Japanese-English Dictionary API (2 points)</li>
+<li>Online Japanese-English Dictionary API (3 points)</li>
 </ul>
 
-
-### MVC
-
-MVC stands for Model-View-Controller. It is a design pattern for implementing user interfaces that separates the logic (model) with the presentation (view) using a middleman (controller). It may be helpful to follow to design pattern in order to allow for greater extensibility later and to keep logic bugs from affecting the presentation and vice versa.
 
 ### User Authentication
 
 User authentication allows for personalized accounts on web services. Each user has a username and password and their specific items on a particular web service (profile, lists, favorites, etc) can then be tied to their account. Using this in this particular web application is crucial for saving lists that users have created to study from. These lists can be retrieved by the user by simply logging into their account and checking their lists. Most likely will use Passport for this.
 
+In the end, I used Passport.
+
 ### CSS Framework
 
 CSS frameworks allow for easier web design that conforms better to current web design standards. It also provides the less graphically inclined with easy to customize templates for a variety of interface components. This would save a great amount of time in comparison to making these interface elements from scratch. Most likely will use Bootstrap for this.
+
+In the end, I used Bootstrap.
 
 ### Online Japanese-English Dictionary API
 
 In order to search for words, there must be an underlying dictionary to search from. There are a great deal of dictionaries online but APIs are sparse. The most widely used dictionary is JMdict, which provides a downloadable XML version of their dictionary. It may be possible to search this XML file using Javascript each time a search is made, although I don't know whether it would take a long time to search the file. Another approach is to turn the XML file into a hash table that allows for quicker searching.
 
+After implementation, JMdict did not work out too well due to the complex nature of the dictionary. It took up a large portion of time before I went with Jisho.org's beta API instead.
+
 A website, Jisho.org, also maintains a beta API of their website. Although functionality is currently limited, it might be enough to get this website up and running.
-
-
-## Possible Additional Features (if time permits)
-
-<ul>
-<li>Share lists with other users</li>
-<li>Multiple testing methods instead of just flashcards</li>
-</ul>
