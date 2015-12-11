@@ -1,26 +1,26 @@
 TODO (High Level)
 	DONE - Finish authentication
 	DONE - Add API support (probably Jisho since JMDict didn't work so well while testing it)
-	- Fix layout (it looks ugly right now)
+	DONE - Fix layout (it looks ugly right now)
 	- Make testing page
-	- Make styling consistent
 	- Make sure JSHint sees no errors
 
 
 
 TODO (Specifics)
 	DONE - Search should be done in clientside JS (Javascript form likely)
-	- Should remove "createdBy" stuff after adding authentication
+	DONE - Should remove "createdBy" stuff after adding authentication
 	DONE - "Sign Up" and "Login" should disappear once someone has logged in
 	DONE - Should also refactor everything for sessions after adding authentication
-	- Expand home page
-	- Lists page looks horrible at the moment
-	- "Words to Add" passes in a spaced text of words, but I can't seem to split based on spaces. Figure out why
+	DONE - Expand home page
+	DONE - Lists page looks horrible at the moment
+	NO LONGER NEEDED - "Words to Add" passes in a spaced text of words, but I can't seem to split based on spaces. Figure out why
 	DONE - Finish post request for sending word from search to list
-	- Finish reworking list so that you can only add words from search
-		Creating a list only involves the name
+	DONE - Finish reworking list so that you can only add words from search
+		DONE Creating a list only involves the name
 		Clicking a list only lets you see the words you've added, and delete words
 	- Maybe support deleting words in lists?
+	DONE - Make it so that lists on the lists page are clickable like words are in search, but maybe with buttons (no blue underlining)
 
 
 

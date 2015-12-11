@@ -1,9 +1,20 @@
+
+    <div style="margin-left: 35px">
+        Choose a list or create a new one.
+    </div>
+    
+<div class="btn-group" style="margin-left: 50px;">
 <p>
         {{#each wordList}}
-        <ul>
-            <a href="/lists/{{slug}}">{{listName}}</a>
-        </ul>
+            <form action="/lists/{{slug}}" method="GET">
+                <button class="btn btn-default btn-block" type="submit" style="margin-left: 10px; vertical-align: center">{{listName}}</button>
+            </form>
+            <br>
         {{/each}}
 </p>
 
-<a href="/lists/create">(Create a New List)</a>
+<form action="/lists/create" method="GET">
+    <button class="btn btn-primary btn-block" type="submit" style="margin-left: 10px;">Create a New List</button>
+</form>
+
+</div>

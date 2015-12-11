@@ -56,7 +56,7 @@ router.get('/api/lists', function(req, res) {
   if (!!req.user){       //if we are logged in, then show the lists
         User.findOne({username: req.user.username}).populate('wordLists').exec(function(err, user){
         if (err){
-            res.json({foo: 'baz'});
+            res.json({error: 'no-lists'});
             //res.redirect('/lists');
         } 
         else{
@@ -65,6 +65,31 @@ router.get('/api/lists', function(req, res) {
             res.json(user.wordLists.map(function(ele){
                 return {
                     'listName': ele.listName
+                };
+            }));
+        }
+        });
+    }
+    else{
+        res.json({error: 'no-user'});
+    }
+});
+
+router.get('/api/lists2', function(req, res) {
+  if (!!req.user){       //if we are logged in, then show the lists
+        User.findOne({username: req.user.username}).populate('wordLists').exec(function(err, user){
+        if (err){
+            res.json({foo: 'baz'});
+            //res.redirect('/lists');
+        } 
+        else{
+            //console.log(user.wordLists);
+            //res.render('lists', {'wordList': user.wordLists});   
+            res.json(user.wordLists.map(function(ele){
+                return {
+                    'listName': ele.listName,
+                    'user': ele.user
+                    
                 };
             }));
         }
@@ -87,11 +112,6 @@ router.post('/lists/create', function(req, res, next){
         listName: req.body.listName,
         user: req.user._id,
         words: []
-        /*
-            TODO
-                Add words from the form
-                Space separation doesn't seem to work?
-        */
     });
 
     //save the list
@@ -107,10 +127,35 @@ router.post('/lists/create', function(req, res, next){
 
 //individual lists
 router.get('/lists/:slug', function(req, res, next){
-    WordList.findOne({slug: req.params.slug}, function(err, list, count){
-        //console.log(list);
-        res.render('makeList', {'heading': list.listName, 'list': list});
-    });
+
+    console.log(req.params.slug);
+    if (!!req.user) {       //if we are logged in, then show the lists
+        User.findOne({ username: req.user.username }).populate('wordLists').exec(function (err, user) {
+            if (err) {
+                res.redirect('login');
+            }
+            else {
+                WordList.findOne({ slug: req.params.slug }, function (err, list, count) {
+                    if (err){
+                        console.log(err);
+                        console.log("this error");
+                        res.redirect('login');
+                    }
+                    else{
+                        console.log(list);
+                        res.render('makeList', { 'heading': list.listName, 'list': list });
+                    }
+                });
+            }
+        });
+    }
+    else {
+        /*
+            TODO
+                Make it so that it shows an error message on the login page
+        */
+        res.render('login');
+    }
 });
 
 //flashcard test for specific list
@@ -119,15 +164,19 @@ router.get('/lists/:slug/test', function(req, res, next){
 });
 
 router.post('/word/create', function(req, res, next){
-    //console.log(req.body);
+    console.log(req.body);
     
     //find by slug name and then update that list with a new item
     //slug name is whatever radio option was checked on the search page
-    WordList.findOneAndUpdate({slug:req.body.radioOption},
+    WordList.findOneAndUpdate({listName:req.body.radioOption},
                           {$push: {words: {word: req.body.word, partOfSpeech: req.body.partOfSpeech, definition: req.body.definition}}},
-                          function(err, list, count) {
-	       //console.log(err, list, count);
-           res.redirect('/lists/' + list.listName);
+                          function(err, list) {
+           if (err){
+               console.log('an error occurred');
+           }
+           else{
+               res.redirect('/lists/' + list.slug);
+           }
     }); 
 });
 

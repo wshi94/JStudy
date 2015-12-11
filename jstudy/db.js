@@ -39,8 +39,8 @@ var WordList = new mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
     listName: {type: String, required: true},
     lastTime: {type: Number},
-	  lastScore: {type: Number},
-	  words: [Word]
+	lastScore: {type: Number},
+	words: [Word]
 });
 
 User.plugin(passportLocalMongoose);

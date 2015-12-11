@@ -1,4 +1,16 @@
 <div class="container">
   <h3>Welcome to JStudy!</h3>
   <p>This is a site that helps you learn and study for Japanese.</p>
+  {{#if user}}
+    <p>
+        To use this site, you can create a new list under the lists tab. You can then search for a word using 
+        the search tab. You can then click on any of the results to add them to your list of choice. 
+    </p>    
+    <p>
+        Once you've added a couple of words to a list, you can see them by going to the list in the list tab.
+        You'll be presented with the character(s), the parts of speech, and the definition.
+    </p>
+  {{else}}
+    <p>Please login or register to use this site to it's full potential!</p>
+  {{/if}}
 </div>

@@ -1,34 +1,34 @@
-<h3>{{heading}}</h3>
+<script type="text/javascript" src="../javascripts/makeList.js"></script>
+
+<h3 style="text-align:center;">{{heading}}</h3>
+
+<br>
 <p>
         {{#each list.words}}
-        <ul>
-            {{word}}
-        </ul>
+        <div class="row" id="wordRow">
+            <div class="col-xs-2 col-md-1.5" id="word" style="font-size:3em; text-align:center">
+                {{word}}
+            </div>
+            <div class="col-xs-16 col-md-10.5">
+                <div>
+                    {{partOfSpeech}}
+                </div>
+                <br>
+                <div>
+                    {{definition}}
+                </div>
+            </div>
+        </div>
+        <br>
         {{/each}}
 </p>
 
+<div type="hidden" id="slug" value={{list.listName}}></div>
 
-<form class="form" method="POST" action="/word/create">
-  <div class="col-xs-3">
-    <div class="col-sm-10">
-       <label>Word</label>
-       <input type="text" name="word" class="form-control">
-    </div>
-  </div>
-  <div class="col-xs-3">
-    <div class="col-sm-10">
-      <label>Part of Speech</label>
-      <input type="text" name="partOfSpeech" class="form-control">
-    </div>
-  </div>
-  <div class="col-xs-4">
-    <label>Definition</label>
-	<textarea class="form-control" name="definition" rows="5"></textarea><br>
-  </div>
+<form class="form" method="GET" action="/search">
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">Add Word to List</button>
+    <div class="col-sm-2" style="margin:15px">
+      <button type="submit" class="btn btn-default">Add a Word to a List</button>
     </div>
   </div>
-  <input type="hidden" name="slug" value={{list.slug}}>
 </form>
